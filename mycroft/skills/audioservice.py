@@ -50,13 +50,14 @@ class AudioService:
     def __init__(self, bus):
         self.bus = bus
 
-    def queue(self, tracks=None):
+    def queue(self, tracks=None, utterance="", autoplay=True):
         """Queue up a track to playing playlist.
 
         Arguments:
             tracks: track uri or list of track uri's
                     Each track can be added as a tuple with (uri, mime)
                     to give a hint of the mime type to the system
+            autoplay: Start playback if no audio is playing
         """
         tracks = tracks or []
         if isinstance(tracks, (str, tuple)):
@@ -65,7 +66,9 @@ class AudioService:
             raise ValueError
         tracks = [ensure_uri(t) for t in tracks]
         self.bus.emit(Message('mycroft.audio.service.queue',
-                              data={'tracks': tracks}))
+                              data={'tracks': tracks,
+                                    "utterance": utterance,
+                                    "autoplay": autoplay}))
 
     def play(self, tracks=None, utterance=None, repeat=None):
         """Start playback.
@@ -149,6 +152,18 @@ class AudioService:
         info = self.bus.wait_for_response(
             Message('mycroft.audio.service.track_info'),
             reply_type='mycroft.audio.service.track_info_reply',
+            timeout=1)
+        return info.data if info else {}
+
+    def playlist_info(self):
+        """Request information of current playlist.
+
+        Returns:
+            Dict with track info.
+        """
+        info = self.bus.wait_for_response(
+            Message('mycroft.audio.service.playlist_info'),
+            reply_type='mycroft.audio.service.playlist_info_reply',
             timeout=1)
         return info.data if info else {}
 

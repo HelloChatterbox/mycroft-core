@@ -44,11 +44,11 @@ class AudioBackend(metaclass=ABCMeta):
         uri = message.data.get("uri")
         if index is None and uri:
             index = self.uri2index(uri)
-        if index is None:
-            index = len(self.track_data) - 1
-        for k in message.data:
-            if message.data[k]:
-                self.track_data[index][k] = message.data[k]
+        if index is not None:
+            # ignore disambiguation results
+            for k in message.data:
+                if message.data[k]:
+                    self.track_data[index][k] = message.data[k]
 
     @abstractmethod
     def supported_uris(self):
@@ -166,6 +166,15 @@ class AudioBackend(metaclass=ABCMeta):
         if self.index not in self.track_data:
             return {}
         return self.track_data[self.index]
+
+    def playlist_info(self):
+        """
+            Fetch info about current playing track.
+
+            Returns:
+                Dict with track info.
+        """
+        return self.track_data
 
     def shutdown(self):
         """ Perform clean shutdown """

@@ -184,6 +184,7 @@ class AudioService:
         self.bus.on('mycroft.audio.service.next', self._next)
         self.bus.on('mycroft.audio.service.prev', self._prev)
         self.bus.on('mycroft.audio.service.track_info', self._track_info)
+        self.bus.on('mycroft.audio.service.playlist_info', self._playlist_info)
         self.bus.on('mycroft.audio.service.list_backends', self._list_backends)
         self.bus.on('mycroft.audio.service.seek_forward', self._seek_forward)
         self.bus.on('mycroft.audio.service.seek_backward', self._seek_backward)
@@ -323,6 +324,8 @@ class AudioService:
         # check if user requested a particular service
         if prefered_service and uri_type in prefered_service.supported_uris():
             selected_service = prefered_service
+            LOG.debug("Using requested backend ({})".format(
+                selected_service.name))
         # check if default supports the uri
         elif self.default and uri_type in self.default.supported_uris():
             LOG.debug("Using default backend ({})".format(self.default.name))
@@ -349,7 +352,7 @@ class AudioService:
         if self.current:
             tracks = message.data['tracks']
             self.current.add_list(tracks)
-        else:
+        elif message.data.get("autoplay"):
             self._play(message)
 
     def _play(self, message):
@@ -387,6 +390,20 @@ class AudioService:
             track_info = {}
         self.bus.emit(Message('mycroft.audio.service.track_info_reply',
                               data=track_info))
+
+    def _playlist_info(self, message):
+        """
+            Returns playlist info on the message bus.
+
+            Args:
+                message: message bus message, not used but required
+        """
+        if self.current:
+            playlist_info = self.current.playlist_info()
+        else:
+            playlist_info = {}
+        self.bus.emit(Message('mycroft.audio.service.playlist_info_reply',
+                              data=playlist_info))
 
     def _list_backends(self, message):
         """ Return a dict of available backends. """
@@ -439,6 +456,8 @@ class AudioService:
         self.bus.remove('mycroft.audio.service.next', self._next)
         self.bus.remove('mycroft.audio.service.prev', self._prev)
         self.bus.remove('mycroft.audio.service.track_info', self._track_info)
+        self.bus.remove('mycroft.audio.service.playlist_info',
+                        self._playlist_info)
         self.bus.remove('mycroft.audio.service.seek_forward',
                         self._seek_forward)
         self.bus.remove('mycroft.audio.service.seek_backward',
