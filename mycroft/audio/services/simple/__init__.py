@@ -189,9 +189,6 @@ class SimpleAudioService(AudioBackend):
         # Terminate process to continue to next
         self._stop_running_process()
 
-    def previous(self):
-        pass
-
     def lower_volume(self):
         if not self._paused:
             self._pause()  # poor-man's ducking

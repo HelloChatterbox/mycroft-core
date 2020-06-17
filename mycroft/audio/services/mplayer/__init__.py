@@ -67,14 +67,6 @@ class MPlayerService(AudioBackend):
         if self.mpc.paused:
             self.mpc.pause()
 
-    def next(self):
-        # just play next self.index
-        self.play()
-
-    def previous(self):
-        # just play previous self.index
-        self.play()
-
     def lower_volume(self):
         if self.normal_volume is None:
             self.normal_volume = self.mpc.volume
