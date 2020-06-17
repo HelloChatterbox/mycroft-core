@@ -164,7 +164,8 @@ class AudioBackend(metaclass=ABCMeta):
                 Dict with track info.
         """
         if self.index not in self.track_data:
-            return {}
+            return {"track_number": self.index}
+        self.track_data[self.index]["track_number"] = self.index
         return self.track_data[self.index]
 
     def playlist_info(self):
