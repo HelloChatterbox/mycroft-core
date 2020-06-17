@@ -102,6 +102,7 @@ class MPlayerService(AudioBackend):
                 if not ret[k]:
                     continue
                 self.track_data[index][k] = ret[k]
+        self.track_data[index]["track_number"] = index
         return self.track_data[index]
 
     def shutdown(self):
