@@ -29,6 +29,17 @@ class CPSMatchLevel(Enum):
     GENERIC = 6
 
 
+class CPSTrackStatus(Enum):
+    DISAMBIGUATION = 1  # not queued for playback, show in gui
+    PLAYING = 2  # Skill is handling playback internally
+    PLAYING_AUDIOSERVICE = 3  # Skill forwarded playback to audio service
+    QUEUED = 4  # Waiting playback to be handled inside skill
+    QUEUED_AUDIOSERVICE = 5  # Waiting playback in audio service
+    BUFFERING = 6  # Incase it's an online source the buffering state or
+    STALLED = 7  # stalled state helps to know when to show the buffering ui
+    END_OF_MEDIA = 8  # helps to know if we want to do autoplay or something
+
+
 class CommonPlaySkill(MycroftSkill, ABC):
     """ To integrate with the common play infrastructure of Mycroft
     skills should use this base class and override the two methods
@@ -224,7 +235,9 @@ class CommonPlaySkill(MycroftSkill, ABC):
         pass
 
     def CPS_send_status(self, artist='', track='', album='', image='',
-                        **kwargs):
+                        track_length="", current_position="",
+                        playlist_position=-1,
+                        status=CPSTrackStatus.DISAMBIGUATION, **kwargs):
         """Inform system of playback status.
 
         If a skill is handling playback and wants the playback control to be
@@ -243,10 +256,27 @@ class CommonPlaySkill(MycroftSkill, ABC):
         """
         data = {'skill': self.name,
                 'artist': artist,
-                'album': artist,
+                'album': album,
                 'track': track,
                 'image': image,
-                'status': None  # TODO Add status system
+                'track_length': track_length,
+                'current_position': current_position,
+                'playlist_position': playlist_position,
+                'status': status
                 }
         data = {**data, **kwargs}  # Merge extra arguments
         self.bus.emit(Message('play:status', data))
+
+    def CPS_send_tracklist(self, tracklist=None):
+        """Inform system of playlist track info.
+
+        Provides track data for playlist
+
+        Arguments:
+            tracklist (str/list): Tracklist data
+        """
+        tracklist = tracklist or []
+        if not isinstance(tracklist, list):
+            tracklist = [tracklist]
+        for idx, track in enumerate(tracklist):
+            self.CPS_send_status(playlist_position=idx, **track)

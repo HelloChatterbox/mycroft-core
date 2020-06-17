@@ -27,6 +27,17 @@ class AudioBackend(metaclass=ABCMeta):
     def __init__(self, config, bus):
         self._track_start_callback = None
         self.supports_mime_hints = False
+        self.bus = bus
+        self.config = config
+        self.index = 0
+        self.track_data = {}
+        self.bus.on('play:status', self.handle_track_status)
+
+    def handle_track_status(self, message):
+        index = message.data.get("playlist_position")
+        if index < 0:
+            index = len(self.track_data) - 1
+        self.track_data[index] = message.data
 
     @abstractmethod
     def supported_uris(self):
@@ -139,10 +150,9 @@ class AudioBackend(metaclass=ABCMeta):
             Returns:
                 Dict with track info.
         """
-        ret = {}
-        ret['artist'] = ''
-        ret['album'] = ''
-        return ret
+        if self.index not in self.track_data:
+            return None
+        return self.track_data[self.index]
 
     def shutdown(self):
         """ Perform clean shutdown """

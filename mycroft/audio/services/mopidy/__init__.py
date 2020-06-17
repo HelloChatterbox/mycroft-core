@@ -48,9 +48,8 @@ class MopidyService(RemoteAudioBackend):
         LOG.info('Connected to mopidy server')
 
     def __init__(self, config, bus, name='mopidy'):
+        super().__init__(config, bus)
         self.connection_attempts = 0
-        self.bus = bus
-        self.config = config
         self.name = name
 
         self.mopidy = None
@@ -97,9 +96,12 @@ class MopidyService(RemoteAudioBackend):
 
     def next(self):
         self.mopidy.next()
+        self.index += 1
 
     def previous(self):
         self.mopidy.previous()
+        if self.index > 0:
+            self.index -= 1
 
     def lower_volume(self):
         self.mopidy.lower_volume()

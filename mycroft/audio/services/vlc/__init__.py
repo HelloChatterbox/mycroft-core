@@ -33,8 +33,6 @@ class VlcService(AudioBackend):
                                      self.track_start, 1)
         self.vlc_list_events.event_attach(vlc.EventType.MediaListPlayerPlayed,
                                           self.queue_ended, 0)
-        self.config = config
-        self.bus = bus
         self.name = name
         self.normal_volume = None
         self.low_volume = self.config.get('low_volume', 30)
@@ -97,10 +95,13 @@ class VlcService(AudioBackend):
     def next(self):
         """ Skip to next track in playlist. """
         self.list_player.next()
+        self.index += 1
 
     def previous(self):
         """ Skip to previous track in playlist. """
         self.list_player.previous()
+        if self.index > 0:
+            self.index -= 1
 
     def lower_volume(self):
         """ Lower volume (will be called when mycroft is listening
@@ -123,11 +124,16 @@ class VlcService(AudioBackend):
     def track_info(self):
         """ Extract info of current track. """
         ret = {}
+        if self.index in self.track_data:
+            ret = self.track_data[self.index]
         meta = vlc.Meta
         t = self.player.get_media()
-        ret['album'] = t.get_meta(meta.Album)
-        ret['artists'] = [t.get_meta(meta.Artist)]
-        ret['name'] = t.get_meta(meta.Title)
+        if not ret.get("album"):
+            ret['album'] = t.get_meta(meta.Album)
+        if not ret.get("artist"):
+            ret['artist'] = [t.get_meta(meta.Artist)]
+        if not ret.get("track"):
+            ret['track'] = t.get_meta(meta.Title)
         return ret
 
     def seek_forward(self, seconds=1):

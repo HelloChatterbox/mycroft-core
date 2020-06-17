@@ -49,8 +49,6 @@ class ChromecastService(RemoteAudioBackend):
     def __init__(self, config, bus, name='chromecast', cast=None):
         super(ChromecastService, self).__init__(config, bus)
         self.connection_attempts = 0
-        self.bus = bus
-        self.config = config
         self.name = name
 
         self.tracklist = []

@@ -50,15 +50,12 @@ class SimpleAudioService(AudioBackend):
 
     def __init__(self, config, bus, name='simple'):
         super().__init__(config, bus)
-        self.config = config
         self.process = None
-        self.bus = bus
         self.name = name
         self._stop_signal = False
         self._is_playing = False
         self._paused = False
         self.tracks = []
-        self.index = 0
         self.supports_mime_hints = True
         mimetypes.init()
 

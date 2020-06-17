@@ -29,8 +29,6 @@ class MPlayerService(AudioBackend):
 
     def __init__(self, config, bus, name='mplayer'):
         super(MPlayerService, self).__init__(config, bus)
-        self.config = config
-        self.bus = bus
         self.name = name
         self.index = 0
         self.normal_volume = None
@@ -73,13 +71,13 @@ class MPlayerService(AudioBackend):
             self.mpc.pause()
 
     def next(self):
-        self.index = self.index + 1
+        self.index += 1
         if self.index > len(self.tracks):
             self.index = 0
             self.play()
 
     def previous(self):
-        self.index = self.index - 1
+        self.index -= 1
         if self.index < 0:
             self.index = 0
             self.play()
