@@ -52,11 +52,8 @@ class MPlayerService(AudioBackend):
         """
         self.stop()
         if len(self.tracks):
-            # play first track
-            self.mpc.loadfile(self.tracks[0])
-            # add other tracks
-            for track in self.tracks[1:]:
-                self.mpc.loadfile(track, 1)
+            # play self.index track
+            self.mpc.loadfile(self.tracks[self.index])
 
     def stop(self):
         self.mpc.stop()
@@ -71,16 +68,12 @@ class MPlayerService(AudioBackend):
             self.mpc.pause()
 
     def next(self):
-        self.index += 1
-        if self.index > len(self.tracks):
-            self.index = 0
-            self.play()
+        # just play next self.index
+        self.play()
 
     def previous(self):
-        self.index -= 1
-        if self.index < 0:
-            self.index = 0
-            self.play()
+        # just play previous self.index
+        self.play()
 
     def lower_volume(self):
         if self.normal_volume is None:
@@ -102,13 +95,22 @@ class MPlayerService(AudioBackend):
                 Dict with track info.
         """
         ret = {}
-        ret['title'] = self.mpc.get_meta_title()
-        ret['artist'] = self.mpc.get_meta_artist()
-        ret['album'] = self.mpc.get_meta_album()
-        ret['genre'] = self.mpc.get_meta_genre()
-        ret['year'] = self.mpc.get_meta_year()
-        ret['track'] = self.mpc.get_meta_track()
-        ret['comment'] = self.mpc.get_meta_comment()
+        if self.index in self.track_data:
+            ret = self.track_data[self.index]
+        if "title" not in ret:
+            ret['title'] = self.mpc.get_meta_title()
+        if "artist" not in ret:
+            ret['artist'] = self.mpc.get_meta_artist()
+        if "album" not in ret:
+            ret['album'] = self.mpc.get_meta_album()
+        if "genre" not in ret:
+            ret['genre'] = self.mpc.get_meta_genre()
+        if "year" not in ret:
+            ret['year'] = self.mpc.get_meta_year()
+        if "track" not in ret:
+            ret['track'] = self.mpc.get_meta_track()
+        if "comment" not in ret:
+            ret['comment'] = self.mpc.get_meta_comment()
         return ret
 
     def shutdown(self):

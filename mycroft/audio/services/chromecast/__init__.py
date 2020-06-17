@@ -135,19 +135,6 @@ class ChromecastService(RemoteAudioBackend):
         # self.cast.volume_up()
         pass
 
-    def track_info(self):
-        """ Return info about currently playing track. """
-        info = {}
-        ret = {}
-        ret['name'] = info.get('name', '')
-        if 'album' in info:
-            ret['artist'] = info['album']['artists'][0]['name']
-            ret['album'] = info['album'].get('name', '')
-        else:
-            ret['artist'] = ''
-            ret['album'] = ''
-        return ret
-
     def shutdown(self):
         """ Disconnect from the device. """
         self.cast.disconnect()

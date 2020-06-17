@@ -95,13 +95,10 @@ class VlcService(AudioBackend):
     def next(self):
         """ Skip to next track in playlist. """
         self.list_player.next()
-        self.index += 1
 
     def previous(self):
         """ Skip to previous track in playlist. """
         self.list_player.previous()
-        if self.index > 0:
-            self.index -= 1
 
     def lower_volume(self):
         """ Lower volume (will be called when mycroft is listening

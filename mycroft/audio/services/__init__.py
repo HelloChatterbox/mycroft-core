@@ -35,9 +35,17 @@ class AudioBackend(metaclass=ABCMeta):
 
     def handle_track_status(self, message):
         index = message.data.get("playlist_position")
-        if index < 0:
+        uri = message.data.get("uri")
+        if index is None and uri:
+            for idx in self.track_data:
+                if self.track_data[idx].get("uri", "") == uri:
+                    index = idx
+                    break
+        elif index is None:
             index = len(self.track_data) - 1
-        self.track_data[index] = message.data
+        for k in message.data:
+            if message.data[k]:
+                self.track_data[index][k] = message.data[k]
 
     @abstractmethod
     def supported_uris(self):
@@ -105,13 +113,15 @@ class AudioBackend(metaclass=ABCMeta):
         """
             Skip to next track in playlist.
         """
-        pass
+        # play index + 1
+        self.play()
 
     def previous(self):
         """
             Skip to previous track in playlist.
         """
-        pass
+        # play index - 1
+        self.play()
 
     def lower_volume(self):
         """
@@ -151,7 +161,7 @@ class AudioBackend(metaclass=ABCMeta):
                 Dict with track info.
         """
         if self.index not in self.track_data:
-            return None
+            return {}
         return self.track_data[self.index]
 
     def shutdown(self):

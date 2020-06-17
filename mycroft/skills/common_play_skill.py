@@ -179,6 +179,8 @@ class CommonPlaySkill(MycroftSkill, ABC):
         if 'utterance' not in kwargs:
             kwargs['utterance'] = self.play_service_string
         self.audioservice.play(*args, **kwargs)
+        self.CPS_send_status(uri=args[0],
+                             status=CPSTrackStatus.PLAYING_AUDIOSERVICE)
 
     def stop(self):
         """Stop anything playing on the audioservice."""
@@ -234,9 +236,9 @@ class CommonPlaySkill(MycroftSkill, ABC):
         # self.CPS_play("http://zoosh.com/stream_music")
         pass
 
-    def CPS_send_status(self, artist='', track='', album='', image='',
+    def CPS_send_status(self, uri="", artist='', track='', album='', image='',
                         track_length="", current_position="",
-                        playlist_position=-1,
+                        playlist_position=None,
                         status=CPSTrackStatus.DISAMBIGUATION, **kwargs):
         """Inform system of playback status.
 
@@ -255,6 +257,7 @@ class CommonPlaySkill(MycroftSkill, ABC):
             image (str): url for image to show
         """
         data = {'skill': self.name,
+                "uri": uri,
                 'artist': artist,
                 'album': album,
                 'track': track,

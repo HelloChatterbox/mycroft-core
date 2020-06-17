@@ -237,6 +237,10 @@ class AudioService:
                 message: message bus message, not used but required
         """
         if self.current:
+            if self.current.index + 1 > len(self.current.tracks):
+                self.current.index = 0
+            else:
+                self.current.index += 1
             self.current.next()
 
     def _prev(self, message=None):
@@ -248,6 +252,10 @@ class AudioService:
                 message: message bus message, not used but required
         """
         if self.current:
+            if self.current.index - 1 < 0:
+                self.current.index = 0
+            else:
+                self.current.index -= 1
             self.current.previous()
 
     def _stop(self, message=None):
