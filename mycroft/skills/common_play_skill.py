@@ -13,14 +13,14 @@
 # limitations under the License.
 
 import re
-from enum import Enum
+from enum import IntEnum
 from abc import ABC, abstractmethod
 from mycroft.messagebus.message import Message
 from .mycroft_skill import MycroftSkill
 from .audioservice import AudioService
 
 
-class CPSMatchLevel(Enum):
+class CPSMatchLevel(IntEnum):
     EXACT = 1
     MULTI_KEY = 2
     TITLE = 3
@@ -29,7 +29,7 @@ class CPSMatchLevel(Enum):
     GENERIC = 6
 
 
-class CPSTrackStatus(Enum):
+class CPSTrackStatus(IntEnum):
     DISAMBIGUATION = 1  # not queued for playback, show in gui
     PLAYING = 2  # Skill is handling playback internally
     PLAYING_AUDIOSERVICE = 3  # Skill forwarded playback to audio service
@@ -238,7 +238,7 @@ class CommonPlaySkill(MycroftSkill, ABC):
 
     def CPS_send_status(self, uri="", artist='', title='', album='', image='',
                         track_length="", current_position="",
-                        playlist_position=None,
+                        track_number=None,
                         status=CPSTrackStatus.DISAMBIGUATION, **kwargs):
         """Inform system of playback status.
 
@@ -264,7 +264,7 @@ class CommonPlaySkill(MycroftSkill, ABC):
                 'image': image,
                 'track_length': track_length,
                 'current_position': current_position,
-                'track_number': playlist_position,
+                'track_number': track_number,
                 'status': status
                 }
         data = {**data, **kwargs}  # Merge extra arguments
@@ -282,4 +282,4 @@ class CommonPlaySkill(MycroftSkill, ABC):
         if not isinstance(tracklist, list):
             tracklist = [tracklist]
         for idx, track in enumerate(tracklist):
-            self.CPS_send_status(playlist_position=idx, **track)
+            self.CPS_send_status(track_number=idx, **track)
