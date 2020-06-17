@@ -38,8 +38,10 @@ class VlcService(AudioBackend):
         self.low_volume = self.config.get('low_volume', 30)
 
     def track_start(self, data, other):
+        info = self.track_info()
+        self.index = info["track_number"]
         if self._track_start_callback:
-            self._track_start_callback(self.track_info()['name'])
+            self._track_start_callback(info['uri'])
 
     def queue_ended(self, data, other):
         LOG.debug('Queue ended')
@@ -118,20 +120,26 @@ class VlcService(AudioBackend):
             self.player.audio_set_volume(self.normal_volume)
             self.normal_volume = None
 
+    def get_meta(self):
+        media = self.player.get_media()
+        return {"title": media.get_meta(vlc.Meta.Title),
+                "artist": media.get_meta(vlc.Meta.Artist),
+                "album": media.get_meta(vlc.Meta.Album),
+                "uri":  media.get_meta(vlc.Meta.URL),
+                "track_number": media.get_meta(vlc.Meta.TrackNumber)}
+
     def track_info(self):
         """ Extract info of current track. """
-        ret = {}
-        if self.index in self.track_data:
-            ret = self.track_data[self.index]
-        meta = vlc.Meta
-        t = self.player.get_media()
-        if not ret.get("album"):
-            ret['album'] = t.get_meta(meta.Album)
-        if not ret.get("artist"):
-            ret['artist'] = [t.get_meta(meta.Artist)]
-        if not ret.get("track"):
-            ret['track'] = t.get_meta(meta.Title)
-        return ret
+        ret = self.get_meta()
+        index = ret.get("track_number") or self.index
+        if index not in self.track_data:
+            self.track_data[index] = ret
+        else:
+            for k in ret:
+                if not ret[k]:
+                    continue
+                self.track_data[index][k] = ret[k]
+        return self.track_data[index]
 
     def seek_forward(self, seconds=1):
         """

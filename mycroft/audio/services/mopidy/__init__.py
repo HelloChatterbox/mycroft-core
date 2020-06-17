@@ -111,11 +111,12 @@ class MopidyService(RemoteAudioBackend):
         ret = {}
         if self.index in self.track_data:
             ret = self.track_data[self.index]
-        if "track" not in ret:
-            ret['track'] = info.get('name', '')
-        if "album" not in ret and 'album' in info:
-            ret['artist'] = info['album']['artists'][0]['name']
-            ret['album'] = info['album'].get('name', '')
+        if info:
+            if "track" not in ret:
+                ret['track'] = info.get('name', '')
+            if "album" not in ret and 'album' in info:
+                ret['artist'] = info['album']['artists'][0]['name']
+                ret['album'] = info['album'].get('name', '')
         return ret
 
 

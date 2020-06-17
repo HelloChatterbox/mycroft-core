@@ -52,8 +52,11 @@ class MPlayerService(AudioBackend):
         """
         self.stop()
         if len(self.tracks):
-            # play self.index track
-            self.mpc.loadfile(self.tracks[self.index])
+            # play first track
+            self.mpc.loadfile(self.tracks[0])
+            # add other tracks
+            for track in self.tracks[1:]:
+                self.mpc.loadfile(track, 1)
 
     def stop(self):
         self.mpc.stop()
@@ -79,31 +82,27 @@ class MPlayerService(AudioBackend):
             self.mpc.volume = 50
         self.normal_volume = None
 
-    def track_info(self):
-        """
-            Fetch info about current playing track.
+    def get_meta(self):
+        return {"title": self.mpc.get_meta_title(),
+                "artist": self.mpc.get_meta_artist(),
+                "album": self.mpc.get_meta_album(),
+                "genre": self.mpc.get_meta_genre(),
+                "year": self.mpc.get_meta_year(),
+                "comment": self.mpc.get_meta_comment(),
+                "track_number": self.mpc.get_meta_track()}
 
-            Returns:
-                Dict with track info.
-        """
-        ret = {}
-        if self.index in self.track_data:
-            ret = self.track_data[self.index]
-        if "title" not in ret:
-            ret['title'] = self.mpc.get_meta_title()
-        if "artist" not in ret:
-            ret['artist'] = self.mpc.get_meta_artist()
-        if "album" not in ret:
-            ret['album'] = self.mpc.get_meta_album()
-        if "genre" not in ret:
-            ret['genre'] = self.mpc.get_meta_genre()
-        if "year" not in ret:
-            ret['year'] = self.mpc.get_meta_year()
-        if "track" not in ret:
-            ret['track'] = self.mpc.get_meta_track()
-        if "comment" not in ret:
-            ret['comment'] = self.mpc.get_meta_comment()
-        return ret
+    def track_info(self):
+        """ Extract info of current track. """
+        ret = self.get_meta()
+        index = ret.get("track_number") or self.index
+        if index not in self.track_data:
+            self.track_data[index] = ret
+        else:
+            for k in ret:
+                if not ret[k]:
+                    continue
+                self.track_data[index][k] = ret[k]
+        return self.track_data[index]
 
     def shutdown(self):
         """

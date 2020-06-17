@@ -33,15 +33,18 @@ class AudioBackend(metaclass=ABCMeta):
         self.track_data = {}
         self.bus.on('play:status', self.handle_track_status)
 
+    def uri2index(self, uri):
+        for idx in self.track_data:
+            if self.track_data[idx].get("uri", "") == uri:
+                return idx
+        return None
+
     def handle_track_status(self, message):
         index = message.data.get("playlist_position")
         uri = message.data.get("uri")
         if index is None and uri:
-            for idx in self.track_data:
-                if self.track_data[idx].get("uri", "") == uri:
-                    index = idx
-                    break
-        elif index is None:
+            index = self.uri2index(uri)
+        if index is None:
             index = len(self.track_data) - 1
         for k in message.data:
             if message.data[k]:

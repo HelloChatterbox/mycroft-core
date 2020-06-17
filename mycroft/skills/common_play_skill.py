@@ -236,7 +236,7 @@ class CommonPlaySkill(MycroftSkill, ABC):
         # self.CPS_play("http://zoosh.com/stream_music")
         pass
 
-    def CPS_send_status(self, uri="", artist='', track='', album='', image='',
+    def CPS_send_status(self, uri="", artist='', title='', album='', image='',
                         track_length="", current_position="",
                         playlist_position=None,
                         status=CPSTrackStatus.DISAMBIGUATION, **kwargs):
@@ -260,11 +260,11 @@ class CommonPlaySkill(MycroftSkill, ABC):
                 "uri": uri,
                 'artist': artist,
                 'album': album,
-                'track': track,
+                'title': title,
                 'image': image,
                 'track_length': track_length,
                 'current_position': current_position,
-                'playlist_position': playlist_position,
+                'track_number': playlist_position,
                 'status': status
                 }
         data = {**data, **kwargs}  # Merge extra arguments
