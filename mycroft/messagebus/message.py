@@ -15,7 +15,12 @@
 import json
 import re
 import inspect
-from mycroft.util.parse import normalize
+try:
+    # dont require lingua_franca to import the Message object...
+    from mycroft.util.parse import normalize
+except ImportError:
+    def normalize(utt, *args, **kwargs):
+        return utt
 from copy import deepcopy
 
 
