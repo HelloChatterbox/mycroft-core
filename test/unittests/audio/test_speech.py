@@ -22,7 +22,7 @@ from time import sleep
 from os.path import exists
 
 import mycroft.audio.speech as speech
-from mycroft.messagebus import Message
+from mycroft_bus_client import Message
 from mycroft.tts.remote_tts import RemoteTTSTimeoutException
 
 """Tests for speech dispatch service."""

@@ -1,6 +1,6 @@
 from unittest import TestCase, mock
 
-from mycroft.messagebus import Message
+from mycroft_bus_client import Message
 from mycroft.skills.common_play_skill import CommonPlaySkill, CPSMatchLevel
 from mycroft.skills.audioservice import AudioService
 

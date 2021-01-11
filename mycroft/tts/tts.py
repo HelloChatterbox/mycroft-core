@@ -27,7 +27,7 @@ from os.path import dirname, exists, isdir, join
 import mycroft.util
 from mycroft.enclosure.api import EnclosureAPI
 from mycroft.configuration import Configuration
-from mycroft.messagebus.message import Message
+from mycroft_bus_client import Message
 from mycroft.metrics import report_timing, Stopwatch
 from mycroft.util import (
     play_wav, play_mp3, check_for_signal, create_signal, resolve_resource_file

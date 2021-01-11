@@ -21,7 +21,7 @@ from mycroft.metrics import report_timing, Stopwatch
 from mycroft.tts import TTSFactory
 from mycroft.util import check_for_signal
 from mycroft.util.log import LOG
-from mycroft.messagebus.message import Message
+from mycroft_bus_client import Message
 from mycroft.tts.remote_tts import RemoteTTSException
 from mycroft.tts.mimic_tts import Mimic
 

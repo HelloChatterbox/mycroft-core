@@ -18,7 +18,7 @@ import time
 from os.path import dirname, abspath
 
 from mycroft.audio.services import RemoteAudioBackend
-from mycroft.messagebus.message import Message
+from mycroft_bus_client import Message
 from mycroft.util.log import LOG
 
 

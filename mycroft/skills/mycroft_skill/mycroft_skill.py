@@ -36,7 +36,8 @@ from mycroft.enclosure.gui import SkillGUI
 from mycroft.configuration import Configuration
 from mycroft.dialog import load_dialogs
 from mycroft.filesystem import FileSystemAccess
-from mycroft.messagebus.message import Message, dig_for_message
+from mycroft.messagebus.message import dig_for_message
+from mycroft_bus_client import Message
 from mycroft.metrics import report_metric
 from mycroft.util import (
     resolve_resource_file,
@@ -429,6 +430,7 @@ class MycroftSkill:
 
         # Speak query and wait for user response
         dialog_exists = self.dialog_renderer.render(dialog, data)
+        print(dialog_exists)
         if dialog_exists:
             self.speak_dialog(dialog, data, expect_response=True, wait=True)
         else:

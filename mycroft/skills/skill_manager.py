@@ -21,7 +21,7 @@ from time import sleep, time, monotonic
 from mycroft.api import is_paired
 from mycroft.enclosure.api import EnclosureAPI
 from mycroft.configuration import Configuration
-from mycroft.messagebus.message import Message
+from mycroft_bus_client import Message
 from mycroft.util.log import LOG
 from .msm_wrapper import create_msm as msm_creator, build_msm_config
 from .settings import SkillSettingsDownloader

@@ -13,7 +13,7 @@
 # limitations under the License.
 #
 from .display_manager import DisplayManager
-from mycroft.messagebus.message import Message
+from mycroft_bus_client import Message
 
 
 '''

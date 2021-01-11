@@ -17,7 +17,7 @@
 from unittest import TestCase, mock
 
 from mycroft.enclosure.gui import SkillGUI
-from mycroft.messagebus import Message
+from mycroft_bus_client import Message
 from mycroft.util.file_utils import resolve_resource_file
 
 

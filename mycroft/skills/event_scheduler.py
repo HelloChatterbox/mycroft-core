@@ -22,7 +22,7 @@ from threading import Thread, Lock
 from os.path import isfile, join, expanduser
 
 from mycroft.configuration import Configuration
-from mycroft.messagebus.message import Message
+from mycroft_bus_client import Message
 from mycroft.util.log import LOG
 from .mycroft_skill.event_container import EventContainer, create_basic_wrapper
 

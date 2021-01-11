@@ -37,7 +37,7 @@ from threading import Thread, Timer
 
 import os
 
-from mycroft.messagebus.client import MessageBusClient
+from mycroft_bus_client import MessageBusClient
 from mycroft.util import get_ipc_directory
 from mycroft.util.log import LOG
 

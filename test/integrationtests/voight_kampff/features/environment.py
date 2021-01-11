@@ -20,8 +20,7 @@ from behave.contrib.scenario_autoretry import patch_scenario_with_autoretry
 from msm import MycroftSkillsManager
 from mycroft.audio import wait_while_speaking
 from mycroft.configuration import Configuration
-from mycroft.messagebus.client import MessageBusClient
-from mycroft.messagebus import Message
+from mycroft_bus_client import Message, MessageBusClient
 from mycroft.util import create_daemon
 
 

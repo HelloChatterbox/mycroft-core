@@ -41,7 +41,7 @@ import ast
 from os.path import join, isdir, basename
 from pyee import EventEmitter
 from numbers import Number
-from mycroft.messagebus.message import Message
+from mycroft_bus_client import Message
 from mycroft.skills.core import MycroftSkill, FallbackSkill
 from mycroft.skills.skill_loader import SkillLoader
 from mycroft.configuration import Configuration

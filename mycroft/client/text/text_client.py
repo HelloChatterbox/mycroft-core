@@ -28,8 +28,7 @@ import textwrap
 import json
 import mycroft.version
 from threading import Thread, Lock
-from mycroft.messagebus.client import MessageBusClient
-from mycroft.messagebus.message import Message
+from mycroft_bus_client import MessageBusClient, Message
 from mycroft.util.log import LOG
 from mycroft.configuration import Configuration
 

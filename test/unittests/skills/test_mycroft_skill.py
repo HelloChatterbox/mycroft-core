@@ -24,7 +24,7 @@ from datetime import datetime
 import json
 
 from mycroft.configuration import Configuration
-from mycroft.messagebus.message import Message
+from mycroft_bus_client import Message
 from mycroft.skills.skill_data import (load_regex_from_file, load_regex,
                                        load_vocabulary, read_vocab_file)
 from mycroft.skills.core import MycroftSkill, resting_screen_handler

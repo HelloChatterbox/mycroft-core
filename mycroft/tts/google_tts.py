@@ -12,8 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-from gtts import gTTS
-from gtts.lang import tts_langs
+try:
+    from gtts import gTTS
+    from gtts.lang import tts_langs
+except ImportError:
+    gTTS = None
+    tts_langs = None
 
 from .tts import TTS, TTSValidator
 
@@ -104,6 +108,8 @@ class GoogleTTS(TTS):
         Returns:
             Tuple ((str) written file, None)
         """
+        if gTTS is None:
+            raise ImportError("gTTS not installed")
         tts = gTTS(text=sentence, lang=self.google_lang)
         tts.save(wav_file)
         return (wav_file, None)  # No phonemes

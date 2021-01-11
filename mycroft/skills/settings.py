@@ -67,7 +67,7 @@ import yaml
 
 from mycroft.api import DeviceApi, is_paired
 from mycroft.configuration import Configuration
-from mycroft.messagebus.message import Message
+from mycroft_bus_client import Message
 from mycroft.util import camel_case_split
 from mycroft.util.log import LOG
 from mycroft.util.file_utils import ensure_directory_exists

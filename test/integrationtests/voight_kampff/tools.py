@@ -17,7 +17,7 @@
 
 import time
 
-from mycroft.messagebus import Message
+from mycroft_bus_client import Message
 
 
 TIMEOUT = 10

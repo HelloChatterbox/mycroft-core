@@ -23,7 +23,7 @@ import time
 
 from behave import given, when, then
 
-from mycroft.messagebus import Message
+from mycroft_bus_client import Message
 from mycroft.audio import wait_while_speaking
 
 from test.integrationtests.voight_kampff import (mycroft_responses, then_wait,

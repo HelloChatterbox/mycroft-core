@@ -20,7 +20,7 @@ import traceback
 from tornado.websocket import WebSocketHandler
 from pyee import EventEmitter
 
-from mycroft.messagebus.message import Message
+from mycroft_bus_client import Message
 from mycroft.util.log import LOG
 
 client_connections = []

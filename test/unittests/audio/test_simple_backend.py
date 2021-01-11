@@ -5,7 +5,7 @@ import unittest
 import unittest.mock as mock
 
 import mycroft.audio.services.simple as simple
-from mycroft.messagebus import Message
+from mycroft_bus_client import Message
 
 """Tests for the simple audio service backend."""
 

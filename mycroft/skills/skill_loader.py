@@ -21,7 +21,7 @@ import sys
 from time import time
 
 from mycroft.configuration import Configuration
-from mycroft.messagebus import Message
+from mycroft_bus_client import Message
 from mycroft.skills.settings import save_settings
 from mycroft.util.log import LOG
 

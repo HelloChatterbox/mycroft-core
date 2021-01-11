@@ -18,11 +18,11 @@ config = {
 class TestVlcBackend(unittest.TestCase):
     def test_load_service(self, mock_vlc_mod):
         bus = mock.Mock()
-        self.assertEqual(len(vlc.load_service(config, bus)), 1)
+        self.assertEqual(len(vlc_service.load_service(config, bus)), 1)
 
     def test_playlist_methods(self, mock_vlc_mod):
         bus = mock.Mock()
-        service = vlc.VlcService(config, bus)
+        service = vlc_service.VlcService(config, bus)
 
         self.assertTrue(isinstance(service.supported_uris(), list))
 
@@ -39,7 +39,7 @@ class TestVlcBackend(unittest.TestCase):
 
     def test_playback_methods(self, mock_vlc_mod):
         bus = mock.Mock()
-        service = vlc.VlcService(config, bus)
+        service = vlc_service.VlcService(config, bus)
 
         loop_mode = mock.Mock(name='Loop')
         normal_mode = mock.Mock(name='Normal')

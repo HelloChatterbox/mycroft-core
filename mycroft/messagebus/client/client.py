@@ -24,7 +24,7 @@ from websocket import (
 )
 
 from mycroft.messagebus.load_config import load_message_bus_config
-from mycroft.messagebus.message import Message
+from mycroft_bus_client import Message
 from mycroft.util import create_echo_function
 from mycroft.util.log import LOG
 from pyee import ExecutorEventEmitter

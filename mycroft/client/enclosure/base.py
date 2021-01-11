@@ -27,7 +27,7 @@ import json
 import tornado.web as web
 from tornado import ioloop
 from tornado.websocket import WebSocketHandler
-from mycroft.messagebus.message import Message
+from mycroft_bus_client import Message
 
 
 Namespace = namedtuple('Namespace', ['name', 'pages'])

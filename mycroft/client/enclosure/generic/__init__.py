@@ -23,7 +23,7 @@ from mycroft.api import has_been_paired
 from mycroft.audio import wait_while_speaking
 from mycroft.enclosure.display_manager import \
     init_display_manager_bus_connection
-from mycroft.messagebus.message import Message
+from mycroft_bus_client import Message
 from mycroft.util import connected
 from mycroft.util.log import LOG
 

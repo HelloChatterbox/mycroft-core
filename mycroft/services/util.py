@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from threading import Event
-from mycroft.messagebus.client import MessageBusClient
+from mycroft_bus_client import MessageBusClient
 from mycroft.configuration import Configuration
 from mycroft.util import create_daemon, create_echo_function
 from mycroft.util.log import LOG

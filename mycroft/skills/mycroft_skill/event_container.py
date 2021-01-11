@@ -1,6 +1,6 @@
 from inspect import signature
 
-from mycroft.messagebus.message import Message
+from mycroft_bus_client import Message
 from mycroft.metrics import Stopwatch, report_timing
 from mycroft.util.log import LOG
 

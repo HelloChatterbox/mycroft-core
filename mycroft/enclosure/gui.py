@@ -16,7 +16,7 @@
 from os.path import join
 
 from mycroft.configuration import Configuration
-from mycroft.messagebus.message import Message
+from mycroft_bus_client import Message
 from mycroft.util import resolve_resource_file
 
 
@@ -122,8 +122,9 @@ class SkillGUI:
         """
         self.__session_data = {}
         self.page = None
-        self.skill.bus.emit(Message("gui.clear.namespace",
-                                    {"__from": self.skill.skill_id}))
+        if self.skill.bus:
+            self.skill.bus.emit(Message("gui.clear.namespace",
+                                        {"__from": self.skill.skill_id}))
 
     def send_event(self, event_name, params=None):
         """Trigger a gui event.

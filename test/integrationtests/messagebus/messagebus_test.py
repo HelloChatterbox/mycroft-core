@@ -23,8 +23,7 @@ import unittest
 from subprocess import Popen, call
 from threading import Thread
 
-from mycroft.messagebus.client import MessageBusClient
-from mycroft.messagebus.message import Message
+from mycroft_bus_client import MessageBusClient, Message
 
 
 class TestMessagebusMethods(unittest.TestCase):

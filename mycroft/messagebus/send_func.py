@@ -17,8 +17,7 @@ from websocket import create_connection
 from mycroft.configuration import Configuration
 from mycroft.configuration.locations import (DEFAULT_CONFIG, SYSTEM_CONFIG,
                                              USER_CONFIG)
-from mycroft.messagebus.client import MessageBusClient
-from mycroft.messagebus.message import Message
+from mycroft_bus_client import MessageBusClient, Message
 
 
 def send(message_to_send, data_to_send=None):

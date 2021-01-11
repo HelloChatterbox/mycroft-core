@@ -20,8 +20,7 @@ from mycroft.client.speech.listener import RecognizerLoop
 from mycroft.configuration import Configuration
 from mycroft.identity import IdentityManager
 from mycroft.lock import Lock as PIDLock  # Create/Support PID locking file
-from mycroft.messagebus.client import MessageBusClient
-from mycroft.messagebus.message import Message
+from mycroft_bus_client import MessageBusClient, Message
 from mycroft.util import create_daemon, wait_for_exit_signal, \
     reset_sigint_handler, create_echo_function
 from mycroft.util.log import LOG

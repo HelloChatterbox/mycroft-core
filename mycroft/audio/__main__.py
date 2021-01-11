@@ -17,13 +17,13 @@
     This handles playback of audio and speech
 """
 from mycroft.configuration import Configuration
-from mycroft.messagebus.client import MessageBusClient
+from mycroft_bus_client import MessageBusClient
 from mycroft.util import reset_sigint_handler, wait_for_exit_signal, \
     create_daemon, create_echo_function, check_for_signal
 from mycroft.util.log import LOG
 
 import mycroft.audio.speech as speech
-from .audioservice import AudioService
+from mycroft.audio.audioservice import AudioService
 
 
 def on_ready():

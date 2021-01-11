@@ -17,7 +17,7 @@ from unittest import TestCase, mock
 from adapt.intent import IntentBuilder
 
 from mycroft.configuration import Configuration
-from mycroft.messagebus import Message
+from mycroft_bus_client import Message
 from mycroft.skills.intent_service import (ContextManager, IntentService,
                                            _get_message_lang, AdaptIntent)
 

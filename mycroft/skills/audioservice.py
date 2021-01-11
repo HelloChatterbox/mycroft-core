@@ -14,7 +14,7 @@
 #
 from os.path import abspath
 
-from mycroft.messagebus.message import Message
+from mycroft_bus_client import Message
 
 
 def ensure_uri(s):

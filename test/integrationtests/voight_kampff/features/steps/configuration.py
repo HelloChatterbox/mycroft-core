@@ -17,7 +17,7 @@ from os.path import join, exists
 import time
 
 from behave import given
-from mycroft.messagebus import Message
+from mycroft_bus_client import Message
 from mycroft.util import resolve_resource_file
 
 

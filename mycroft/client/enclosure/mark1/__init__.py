@@ -30,7 +30,7 @@ from mycroft.client.enclosure.mark1.mouth import EnclosureMouth
 from mycroft.enclosure.display_manager import \
     init_display_manager_bus_connection
 from mycroft.configuration import Configuration, LocalConf, USER_CONFIG
-from mycroft.messagebus.message import Message
+from mycroft_bus_client import Message
 from mycroft.util import play_wav, create_signal, connected, check_for_signal
 from mycroft.util.audio_test import record
 from mycroft.util.log import LOG

@@ -29,8 +29,7 @@ from mycroft.api import is_paired, BackendDown, DeviceApi
 from mycroft.audio import wait_while_speaking
 from mycroft.enclosure.api import EnclosureAPI
 from mycroft.configuration import Configuration
-from mycroft.messagebus.client import MessageBusClient
-from mycroft.messagebus.message import Message
+from mycroft_bus_client import MessageBusClient, Message
 from mycroft.util import (
     connected,
     create_echo_function,
@@ -40,10 +39,10 @@ from mycroft.util import (
 )
 from mycroft.util.lang import set_active_lang
 from mycroft.util.log import LOG
-from .core import FallbackSkill
-from .event_scheduler import EventScheduler
-from .intent_service import IntentService
-from .skill_manager import SkillManager
+from mycroft.skills.core import FallbackSkill
+from mycroft.skills.event_scheduler import EventScheduler
+from mycroft.skills.intent_service import IntentService
+from mycroft.skills.skill_manager import SkillManager
 
 RASPBERRY_PI_PLATFORMS = ('mycroft_mark_1', 'picroft', 'mycroft_mark_2pi')
 

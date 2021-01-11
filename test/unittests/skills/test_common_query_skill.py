@@ -1,6 +1,6 @@
 from unittest import TestCase, mock
 
-from mycroft.messagebus import Message
+from mycroft_bus_client import Message
 from mycroft.skills.common_query_skill import (CommonQuerySkill, CQSMatchLevel,
                                                CQSVisualMatchLevel,
                                                handles_visuals)
